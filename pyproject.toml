@@ -1,0 +1,10 @@
+[project]
+name = "marimo-report-builder"
+version = "0.1.0"
+description = "Generic framework for building reports from a series of customized visualization elements, using marimo for reactivity"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "cirro>=1.9.2",
+    "marimo>=0.18.4",
+]
