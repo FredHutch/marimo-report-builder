@@ -11,11 +11,19 @@ class Action:
     _catalog: DisplayCatalog
     _settings: Settings
     _data_backend: DataBackend
+    _rerun: callable
 
-    def __init__(self, catalog: DisplayCatalog, settings: Settings, data_backend: DataBackend):
+    def __init__(
+        self,
+        catalog: DisplayCatalog,
+        settings: Settings,
+        data_backend: DataBackend,
+        rerun: callable
+    ):
         self._catalog = catalog
         self._settings = settings
         self._data_backend = data_backend
+        self._rerun = rerun
 
     def select_1(self):
         return mo.md("").batch()
@@ -31,6 +39,9 @@ class Action:
 
     def execute(self, **kwargs):
         raise NotImplementedError("Subclasses should implement this method")
+
+    def execute2(self, **kwargs):
+        pass
 
     def _get_displays(self) -> List[dict]:
         return self._settings.get("displays", default=list())

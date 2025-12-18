@@ -49,9 +49,16 @@ class ActionMenu:
             searchable=True
         )
 
-    def get(self, selection: str, catalog: DisplayCatalog, settings: Settings, data_backend: DataBackend) -> Action:
+    def get(
+        self,
+        selection: str,
+        catalog: DisplayCatalog,
+        settings: Settings,
+        data_backend: DataBackend,
+        rerun: callable
+    ) -> Action:
         """
         Return the action that was selected.
         """
         action_cls = next(action for action in self.actions if action.name == selection)
-        return action_cls(catalog, settings, data_backend)
+        return action_cls(catalog, settings, data_backend, rerun)

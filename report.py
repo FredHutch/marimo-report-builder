@@ -59,6 +59,20 @@ def _(ActionMenu):
 
 
 @app.cell
+def _(mo):
+    # Set up a state element which allows an action to rerun the page
+    get_rerun_trigger, set_rerun_trigger = mo.state(0)
+    return (set_rerun_trigger,)
+
+
+@app.cell
+def _(datetime, set_rerun_trigger):
+    def rerun():
+        set_rerun_trigger(datetime.now())
+    return (rerun,)
+
+
+@app.cell
 def _(action_menu, settings):
     menu_selection = action_menu.select(settings)
     menu_selection
@@ -66,9 +80,9 @@ def _(action_menu, settings):
 
 
 @app.cell
-def _(action_menu, catalog, data_backend, menu_selection, settings):
+def _(action_menu, catalog, data_backend, menu_selection, rerun, settings):
     # Get the action that was selected
-    action = action_menu.get(menu_selection.value, catalog, settings, data_backend)
+    action = action_menu.get(menu_selection.value, catalog, settings, data_backend, rerun)
     return (action,)
 
 
