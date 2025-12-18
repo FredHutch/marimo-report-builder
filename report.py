@@ -39,7 +39,8 @@ def _(DisplayCatalog):
     # Set up the types of displays that are available
     # Note that this will likely be populated with different options for other types of reports
     from marimo_report_builder.examples.display.scatter_plot import ScatterPlot
-    catalog = DisplayCatalog([ScatterPlot])
+    from marimo_report_builder.examples.display.markdown import Markdown
+    catalog = DisplayCatalog([ScatterPlot, Markdown])
     return (catalog,)
 
 
