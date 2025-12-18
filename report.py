@@ -62,18 +62,21 @@ def _(ActionMenu):
 def _(mo):
     # Set up a state element which allows an action to rerun the page
     get_rerun_trigger, set_rerun_trigger = mo.state(0)
-    return (set_rerun_trigger,)
+    return get_rerun_trigger, set_rerun_trigger
 
 
 @app.cell
-def _(datetime, set_rerun_trigger):
+def _(set_rerun_trigger):
+    from datetime import datetime
+
     def rerun():
         set_rerun_trigger(datetime.now())
     return (rerun,)
 
 
 @app.cell
-def _(action_menu, settings):
+def _(action_menu, get_rerun_trigger, settings):
+    get_rerun_trigger()
     menu_selection = action_menu.select(settings)
     menu_selection
     return (menu_selection,)
@@ -127,12 +130,19 @@ def _(
     action_selection_3,
     action_selection_4,
 ):
-    action.execute(
-        **action_selection_1.value,
-        **action_selection_2.value,
-        **action_selection_3.value,
-        **action_selection_4.value
-    )
+    import traceback
+
+    try:
+        res = action.execute(
+            **action_selection_1.value,
+            **action_selection_2.value,
+            **action_selection_3.value,
+            **action_selection_4.value
+        )
+    except Exception as e:
+        res = traceback.format_exc()
+
+    res
     return
 
 

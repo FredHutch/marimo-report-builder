@@ -25,7 +25,7 @@ class Edit(Action):
         # Get the index of the display to select
         return mo.md("- {edit_ix}").batch(
             edit_ix=mo.ui.number(
-                label="Select Display Element:",
+                label="Select Display Element (0-indexed):",
                 start=0,
                 step=1,
                 stop=len(displays)-1,
